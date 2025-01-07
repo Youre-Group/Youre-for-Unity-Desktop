@@ -1,0 +1,15 @@
+{
+  "name": "de.youre.forunitydesktop",
+  "version": "1.0.0",
+  "license": "MIT",
+  "displayName": "YOURE for Unity Desktop",
+  "description": "The YOURE Sign In Component Unity Package provides a simple and convenient way for Unity developers to integrate YOURE sign-in functionality into their applications. With this package, users can quickly and easily sign in to YOURE and access their accounts without leaving the Unity environment.",
+  "unity": "2020.3",
+  "documentationUrl": "https://github.com/Youre-Group/Youre-for-Unity-Desktop",
+  "licensesUrl": "https://github.com/Youre-Group/Youre-for-Unity-Desktop",
+  "author": {
+    "name": "YOURE Games",
+    "email": "mobile@youre.net",
+    "url": "https://www.youre.net"
+  }
+}
