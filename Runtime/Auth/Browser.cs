@@ -38,6 +38,8 @@ namespace Auth
 
         public Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
         {
+            Youre.LogDebug("StartUrl:" + options.StartUrl);
+
             _task = new TaskCompletionSource<BrowserResult>();
             Launch(options.StartUrl);
             return _task.Task;

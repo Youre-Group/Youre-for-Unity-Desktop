@@ -4,7 +4,7 @@ using Auth;
 using Data;
 using UnityEngine;
 using UnityEngine.Networking;
-using static Codice.Client.Common.EventTracking.TrackFeatureUseEvent.Features.DesktopGUI.Filters;
+//using static Codice.Client.Common.EventTracking.TrackFeatureUseEvent.Features.DesktopGUI.Filters;
 
 namespace YourePlugin
 {
@@ -37,6 +37,21 @@ namespace YourePlugin
             return true;
         }
 
+        private static async Task SendRequestAsync(UnityWebRequest request)
+        {
+            var operation = request.SendWebRequest();
+
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Request failed: {request.error}");
+            }
+        }
+        
         /// <summary>
         /// Will return YoureUser Object if previous session is still valid
         /// </summary>
@@ -52,7 +67,7 @@ namespace YourePlugin
 
             UnityWebRequest request = UnityWebRequest.Get($"{_authority}/protocol/openid-connect/userinfo");
             request.SetRequestHeader("Authorization", "Bearer " + savedAccessToken);
-            await request.SendWebRequest();
+            await SendRequestAsync(request);
 
             if (request.result == UnityWebRequest.Result.Success)
             {

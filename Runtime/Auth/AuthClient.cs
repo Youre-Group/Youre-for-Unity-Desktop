@@ -15,7 +15,7 @@ using IdentityModel.OidcClient.Browser;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using YourePlugin;
-
+using UnityEngine;
 namespace Auth
 {
     public class AuthClient
@@ -23,11 +23,20 @@ namespace Auth
         private OidcClient _client;
         private LoginResult _result;
 
+        
+        public Browser Browser { get; }
+        
         public AuthClient(string clientId, string authority, string redirectUrl)
         {
+            if (Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXEditor)
+            {
+                Browser = new MacOSBrowser();
+            }
+            else if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) 
+            {
+                Browser = new WindowsBrowser();
+            }
             
-            Browser = new WindowsBrowser();
-
             CertificateHandler.Initialize();
             
             var options = new OidcClientOptions()
@@ -42,6 +51,8 @@ namespace Auth
                 Browser = Browser,
                 LoggerFactory = new LoggerFactory()
             };
+            
+            
             _client = new OidcClient(options);
         }
 
@@ -114,6 +125,5 @@ namespace Auth
             return false;
         }
 
-        public Browser Browser { get; }
     }
 }
